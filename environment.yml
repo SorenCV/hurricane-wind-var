@@ -1,0 +1,19 @@
+name: hurricane-wind-var
+
+channels:
+  - conda-forge
+  - nodefaults
+
+dependencies:
+  - python=3.12.13
+  - pip
+  # CodeCarbon 2.5.1 imports pkg_resources, retained by setuptools <81.
+  - setuptools<81
+  # Supply GDAL and its native libraries through conda-forge. The remaining
+  # exact, Colab-validated Python dependencies are installed by pip below.
+  - gdal=3.8.4
+  - pip:
+      # Build Rasterio against this environment's GDAL/PROJ instead of using
+      # its wheel, which bundles a newer PROJ requiring a newer proj.db.
+      - --no-binary=rasterio
+      - -r requirements.txt
